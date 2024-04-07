@@ -33,7 +33,31 @@ basket.json:
 #### `BasketSplitter`
  - ##### `split(List<String> items)`
    Takes List of products, separates them into optimal delivery groups and returns them as Map.\
-   When `items` are empty or have a products that are absent in config file returns empty Map. =
+   When `items` are empty or have a products that are absent in config file returns empty Map.
+   ## Solution after deadline
+   Because of lack of time I did not have enough time to change method, but in 15 minutes before deadline I find improvement that will make `split` method return files that are not absent
+   in delivery group with key "No Delivery method".\
+   Old Version:
+   ```java
+           Map<String, List<String>> deliveries = new HashMap<>();
+
+        for (String item : items) { //iterating over items in basket
+            if (products.get(item) == null) {
+                System.out.println("Provided basket file has products that are not absent in config file");
+                return new HashMap<>();
+            }
+
+            for (String deliveryMethod : products.get(item)) {  //iterating over delivery method of item
+   ```
+   New Version:
+   ```java
+   Map<String, List<String>> deliveries = new HashMap<>();
+
+        for (String item : items) { //iterating over items in basket
+            products.computeIfAbsent(item, k -> List.of("No Delivery Method"));
+   
+            for (String deliveryMethod : products.get(item)) {  //iterating over delivery method of item
+   ```
 #### `JsonParser`
  - ##### `loadDeliveryOptions(String path)`
    Loads from JSON file list of products with available delivery methods and then returns Map according to the pattern: `Key - Product, Value - List of delivery methods`.

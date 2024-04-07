@@ -3,7 +3,7 @@ import com.ocado.basket.JsonParser;
 
 import java.io.IOException;
 
-public class Main {
+public class Testing {
     public static void main(String[] args) {
         try {
             System.out.println(JsonParser.loadDeliveryOptions("src/main/resources/config.json"));
@@ -19,7 +19,7 @@ public class Main {
 
         BasketSplitter splitter = new BasketSplitter("src/main/resources/config.json");
         try {
-            splitter.split(JsonParser.getItemsFromBasket("src/main/resources/basket-1.json"));
+            splitter.split(JsonParser.getItemsFromBasket("src/main/resources/basket-3.json"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

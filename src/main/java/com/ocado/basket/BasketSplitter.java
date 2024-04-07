@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 /*
-* Shipping methods:
-*   Pick-up point
-*   Parcel locker
-*   Courier
-*   Same day delivery
-*   Next day shipping
-*   Mailbox delivery
-*   In-store pick-up
-*   Express Collection
-*
-*
-**/
+ * Shipping methods:
+ *   Pick-up point
+ *   Parcel locker
+ *   Courier
+ *   Same day delivery
+ *   Next day shipping
+ *   Mailbox delivery
+ *   In-store pick-up
+ *   Express Collection
+ *
+ *
+ **/
 
 public class BasketSplitter {
 
@@ -32,13 +32,16 @@ public class BasketSplitter {
             throw new RuntimeException(e);
         }
     }
-    public Map<String, List<String>> split(List<String> items) {
-//        Map<String, List<String>> basket = new HashMap<>();
-//        for (String item : items) {
-//            if (products.containsKey(item)) {
-//                basket.put(item, products.get(item));
-//            }
-//        }
+
+    public Map<String, List<String>>split(List<String> items) {
+        /*
+         * 1 step - map preparation
+         * 2 step - find the biggest group
+         * 3 step - erase products from other delivery methods
+         * 4 step - delete empty delivery groups
+         * 5 step - repeat steps 2-4 until 0 groups left
+         * */
+        Map<String, List<String>> groups;
 
         //Creates map as (key, value) - (Delivery Method, List of Products)
         Map<String, List<String>> deliveries = new HashMap<>();
@@ -46,24 +49,17 @@ public class BasketSplitter {
             for (String deliveryMethod : products.get(item)) {
                 if (deliveries.containsKey(deliveryMethod)) {
                     deliveries.get(deliveryMethod).add(item);
-                }
-                else {
+                } else {
                     List<String> products = new ArrayList<>();
                     products.add(item);
                     deliveries.put(deliveryMethod, products);
                 }
             }
         }
-        
-//        for (String item : basket.keySet()){
-//            System.out.println("\"" + item + "\" : \"" + basket.get(item)+"\"");
-//        }
-//        System.out.println();
-//        for (String deliveryMethod : deliveries.keySet()) {
-//            System.out.println("\"" + deliveryMethod +  "\" : \"" + deliveries.get(deliveryMethod)+"\"");
-//        }
 
-        return deliveries;
+        groups = SplitterAlgorithm.splitterAlgorithm(deliveries);
+
+        return groups;
     }
 
 

@@ -9,15 +9,27 @@ import java.util.List;
 import java.util.Map;
 
 public class JsonParser {
-    public static Map<String, List<String>> loadDeliveryOptions(String path) throws IOException {
+    public static Map<String, List<String>> loadDeliveryOptions(String path) {
+
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new File(path), new TypeReference<Map<String, List<String>>>() {
-        });
+
+        try {
+            return mapper.readValue(new File(path), new TypeReference<Map<String, List<String>>>() {
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static List<String> getItemsFromBasket(String path) throws IOException {
+    public static List<String> getItemsFromBasket(String path) {
+
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new File(path), new TypeReference<List<String>>() {
-        });
+
+        try {
+            return mapper.readValue(new File(path), new TypeReference<List<String>>() {
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
